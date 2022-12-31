@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoginForm = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: {errors}, reset } = useForm();
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const onSubmit = (data) =>
+
+  const onSubmit = (data) =>{
     axios
       .post(`https://test.zyax.se/access/`, data)
       .then((Response) => {
@@ -17,12 +17,19 @@ const LoginForm = () => {
       .then(() => {
         setLoggedIn(true);
       })
-      .catch((Error) => console.log(Error));
+      .catch((Error) => console.log(Error))
+      reset();
+    }
+
+
+
 
   const LogOut = () => {
     localStorage.clear();
     setLoggedIn(false);
+    reset();
   };
+  
 
   const LogOutButton = () => {
     let aToken = localStorage.getItem("token");
@@ -43,21 +50,40 @@ const LoginForm = () => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="container mt-3 mb-3">
         <div className="mb-3">
+          <fieldset disabled={onsubmit}>
           <label style={{ margin: 10 }}>Email:</label>
-          <input type="text" placeholder="Enter Email" {...register("email")} />
+          <input 
+            type="text" 
+            placeholder="Enter Email" 
+            {...register("email", {
+              required: "Email is required.",
+              pattern: {
+                value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                message: "Email is not valid"
+              }
+            })} 
+          />
+          {errors.email && <p className="errorMsg" style={{color: "red"}}>{errors.email.message}</p>}
+          </fieldset>
         </div>
         <div className="mb-3">
+        <fieldset disabled={onsubmit}>
           <label style={{ margin: 10 }}>Password:</label>
           <input
             type="password"
             placeholder="Enter Password"
-            {...register("password")}
+            {...register("password", {
+              required: "Password is required"
+            })}
           />
+          {errors.password && (<p className="errorMsg" style={{color: "red"}}>{errors.password.message}</p>)}
+          </fieldset>
         </div>
         <button
           type="submit"
           value="Submit"
           className="me-4 btn btn-success btn-lg btn-block"
+          disabled={onsubmit}
         >
           Submit
         </button>
