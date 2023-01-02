@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
+
+
 
 const LoginForm = () => {
   const { register, handleSubmit, formState: {errors}, reset } = useForm();
@@ -48,18 +49,20 @@ const LoginForm = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="container mt-3 mb-3">
+      <form onSubmit={handleSubmit(onSubmit)} className="container mt-3 mb-3" label="loginForm">
         <div className="mb-3">
           <fieldset disabled={onsubmit}>
-          <label style={{ margin: 10 }}>Email:</label>
+          <label for="email"style={{ margin: 10 }}>Email:</label>
           <input 
+            data-testid="email"
+            required="true"
             type="text" 
             placeholder="Enter Email" 
             {...register("email", {
               required: "Email is required.",
               pattern: {
                 value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
-                message: "Email is not valid"
+                message: "Email is invalid."
               }
             })} 
           />
@@ -68,12 +71,14 @@ const LoginForm = () => {
         </div>
         <div className="mb-3">
         <fieldset disabled={onsubmit}>
-          <label style={{ margin: 10 }}>Password:</label>
+          <label for="password"style={{ margin: 10 }}>Password:</label>
           <input
+            data-testid="password"
+            required="true"
             type="password"
             placeholder="Enter Password"
             {...register("password", {
-              required: "Password is required"
+              required: "Password is required."
             })}
           />
           {errors.password && (<p className="errorMsg" style={{color: "red"}}>{errors.password.message}</p>)}
