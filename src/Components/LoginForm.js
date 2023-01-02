@@ -52,10 +52,10 @@ const LoginForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="container mt-3 mb-3" label="loginForm">
         <div className="mb-3">
           <fieldset disabled={onsubmit}>
-          <label for="email"style={{ margin: 10 }}>Email:</label>
+          <label style={{ margin: 10 }}>Email:</label>
           <input 
             data-testid="email"
-            required="true"
+            required
             type="text" 
             placeholder="Enter Email" 
             {...register("email", {
@@ -71,10 +71,10 @@ const LoginForm = () => {
         </div>
         <div className="mb-3">
         <fieldset disabled={onsubmit}>
-          <label for="password"style={{ margin: 10 }}>Password:</label>
+          <label style={{ margin: 10 }}>Password:</label>
           <input
             data-testid="password"
-            required="true"
+            required
             type="password"
             placeholder="Enter Password"
             {...register("password", {
