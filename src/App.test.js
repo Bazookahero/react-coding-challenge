@@ -2,6 +2,7 @@ import * as React from 'react';
 import { render, screen, cleanup, getByTestId } from '@testing-library/react';
 import App from './App';
 import axios from 'axios';
+import {LogOut} from './Components/LoginForm';
 
 const mockedAxios = axios
 
@@ -36,4 +37,16 @@ afterAll(() => {
   localStorage.removeItem("token")
 })
 
-  
+
+  // it("Logout button should remove accesstoken from localstorage", async() => {
+  //   mockedAxios
+  //     .post(`https://test.zyax.se/access/`, data)
+  //     .then((Response) => {
+  //       localStorage.setItem("token", Response.data.accessToken);
+  //     })
+  //   const spyOnLoS = jest.spyOn(localStorage, 'removeItem')
+    
+  //   app.getByTestId("logOutButton")()
+
+  //   expect(spyOnLoS).toHaveBeenCalled()
+  // })
