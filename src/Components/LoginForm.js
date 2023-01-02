@@ -25,7 +25,7 @@ const LoginForm = () => {
 
 
 
-  const LogOut = () => {
+    const LogOut = () => {
     localStorage.clear();
     setLoggedIn(false);
     reset();
@@ -37,6 +37,7 @@ const LoginForm = () => {
     if (loggedIn === true && aToken !== null) {
       return (
         <button
+          data-testid="logOutButton"
           type="reset"
           onClick={LogOut}
           className="me-4 btn btn-danger btn-lg btn-block"
@@ -97,5 +98,6 @@ const LoginForm = () => {
     </div>
   );
 };
+
 
 export default LoginForm;
